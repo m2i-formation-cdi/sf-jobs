@@ -7,7 +7,12 @@
             <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         {% endblock %}
     </head>
-    <body>
+    <body class="container-fluid">
+
+        {% block navbar %}
+            {{ include('_fragments/navbar.html.twig') }}
+        {% endblock %}
+
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="{{ asset('build/runtime.js') }}"></script>
