@@ -1,0 +1,46 @@
+App\Entity\Skill:
+  skill_1:
+    skillName: Java
+  skill_2:
+    skillName: Javascript
+  skill_3:
+    skillName: Python
+  skill_4:
+    skillName: Go
+  skill_5:
+    skillName: C#
+  skill_6:
+    skillName: Haskell
+  skill_7:
+    skillName: Angular
+  skill_8:
+    skillName: Node.js
+  skill_9:
+    skillName: React
+  skill_10:
+    skillName: Ionic
+  skill_11:
+    skillName: C++
+  skill_12:
+    skillName: SmallTalk
+  skill_13:
+    skillName: CSS
+  skill_14:
+    skillName: HTML
+  skill_15:
+    skillName: PHP
+  skill_16:
+    skillName: Symfony
+
+App\Entity\Applicant:
+  applicant{1..20}:
+    name: <name()>
+    skills: <randomElements([@skill_*, @skill_*,@skill_*, @skill_*,@skill_*], 3)>
+    resume: 50%? <sentence()>
+
+App\Entity\Job:
+  job{1..50}:
+    title: <jobTitle()>
+    skills: <randomElements([@skill_*, @skill_*,@skill_*, @skill_*,@skill_*], 3)>
+
+
