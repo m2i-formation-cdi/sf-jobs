@@ -14,7 +14,7 @@ class ApplicantType extends AbstractType
         $builder
             ->add('name')
             ->add('resume')
-            ->add('skills')
+            //->add('skills')
         ;
     }
 

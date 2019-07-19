@@ -14,7 +14,7 @@ class JobType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('skills')
+            //->add('skills')
         ;
     }
 

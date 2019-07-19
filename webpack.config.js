@@ -30,7 +30,7 @@ Encore
         './assets/js/app.js'
     ])
     .addStyleEntry('css/app', [
-        './node_modules/bootstrap/dist/css/bootstrap.min.css',
+        './node_modules/bootstrap/dist/css/bootstrap.css',
         './node_modules/font-awesome/css/font-awesome.css',
         './assets/css/app.css'
     ])
