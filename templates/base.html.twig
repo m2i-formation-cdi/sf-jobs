@@ -13,7 +13,10 @@
             {{ include('_fragments/navbar.html.twig') }}
         {% endblock %}
 
-        {% block body %}{% endblock %}
+        <div id="content">
+            {% block body %}{% endblock %}
+        </div>
+
         {% block javascripts %}
             {{ encore_entry_script_tags('js/app') }}
         {% endblock %}

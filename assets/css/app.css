@@ -1,3 +1,8 @@
 body {
-    background-color: lightgray;
+    background-color: #eae6dd;
+}
+
+#content {
+    margin-top: 100px;
+    padding: 10px;
 }
