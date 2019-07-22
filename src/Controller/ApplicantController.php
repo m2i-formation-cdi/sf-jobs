@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Applicant;
 use App\Form\ApplicantType;
 use App\Repository\ApplicantRepository;
+use App\Repository\SkillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,23 +29,32 @@ class ApplicantController extends AbstractController
     /**
      * @Route("/new", name="applicant_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SkillRepository $skillRepository): Response
     {
         $applicant = new Applicant();
         $form = $this->createForm(ApplicantType::class, $applicant);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $skillsID = $request->request->get("applicant")["skills"];
+            foreach ($skillsID as $item){
+                $skill = $skillRepository->find($item["skill"]);
+                $applicant->addSkill($skill);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($applicant);
             $entityManager->flush();
 
-            return $this->redirectToRoute('applicant_index');
+            //return $this->redirectToRoute('applicant_index');
         }
 
         return $this->render('applicant/new.html.twig', [
             'applicant' => $applicant,
             'form' => $form->createView(),
+            'data' => $request
         ]);
     }
 

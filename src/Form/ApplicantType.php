@@ -16,11 +16,13 @@ class ApplicantType extends AbstractType
             ->add('name')
             ->add('resume')
             ->add('skills', CollectionType::class, [
-                'entry_type' => SkillType::class,
+                'entry_type' => SkillChoiceType::class,
                 'allow_add' => true,
                 'entry_options'=> ['label'=> false],
                 'prototype' => true,
-                'by_reference' => false
+                'by_reference' => false,
+                'mapped' => false
+
 
             ])
 
