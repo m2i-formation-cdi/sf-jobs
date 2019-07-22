@@ -27,8 +27,8 @@ class JobRepository extends ServiceEntityRepository
                     ->groupBy("job.id");
 
         if(! empty($search["jobTitle"])){
-            $qb ->andWhere("job.title LIKE '%:title%'")
-                ->setParameter('title', $search["jobTitle"]);
+            $qb ->andWhere("job.title LIKE :title")
+                ->setParameter('title', "%".$search["jobTitle"]."%");
         }
 
         if(!empty($search["skills"])){
@@ -52,8 +52,6 @@ class JobRepository extends ServiceEntityRepository
                 }
             }
         }
-
-        dump($qb->getQuery()->getDQL());
 
         return $qb->getQuery()->getResult();
 

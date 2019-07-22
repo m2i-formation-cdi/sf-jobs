@@ -19,15 +19,15 @@ class SearchController extends AbstractController
 
         $form->handleRequest($request);
 
+        $searchResult = [];
         if($form->isSubmitted() && $form->isValid()){
-            $data = $repository->getJobsFromSearch($form->getData());
-
-            dump($data);
+            $searchResult = $repository->getJobsFromSearch($form->getData());
         }
 
         return $this->render('search/index.html.twig', [
             'controller_name' => 'SearchController',
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'searchResult' => $searchResult
         ]);
     }
 }

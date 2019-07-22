@@ -19,5 +19,22 @@
             </button>
         </div>
     {{ form_end(form) }}
+
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Compétences</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in searchResult %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td> {{ job.getSkillsList() }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

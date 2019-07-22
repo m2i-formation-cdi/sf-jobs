@@ -5,6 +5,11 @@ namespace App\Controller;
 use App\Entity\Job;
 use App\Form\JobType;
 use App\Repository\JobRepository;
+use Doctrine\DBAL\LockMode;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\PessimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,15 +66,19 @@ class JobController extends AbstractController
     /**
      * @Route("/{id}/edit", name="job_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Job $job): Response
+    public function edit(Request $request, Job $job, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('job_index');
+        if ($form->isSubmitted() && $form->isValid()) {
+            try  {
+                $em->flush();
+                return $this->redirectToRoute('job_index');
+            } catch(OptimisticLockException $ex){
+                $this->addFlash("error", "Le job a été modifié par une tierce personne");
+            }
         }
 
         return $this->render('job/edit.html.twig', [
