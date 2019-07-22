@@ -20,11 +20,18 @@
         $(document).ready(function () {
             $collectionHolder = $("#applicant_skills");
             $template = $collectionHolder.data("prototype");
+            var index = $collectionHolder.children().length;
 
             $("#addSkill").click(function () {
-                let index = $collectionHolder.children().length;
-                let newSkill = $template.replace(/__name__/g, index);
+
+                let newSkill = $($template.replace(/__name__/g, index++));
+                let deleteButton = $('<button type="button" class="delete">Supprimer</button><hr>');
+                newSkill.append(deleteButton);
                 $collectionHolder.append(newSkill);
+            });
+            
+            $collectionHolder.delegate('.delete', 'click', function () {
+                $(this).parent().remove();
             });
         });
 
