@@ -25,9 +25,15 @@ class Applicant
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="applicants")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="applicants", cascade={"persist"})
      */
     private $skills;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Experience", mappedBy="applicant")
+     */
+    private $experiences;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=true)
@@ -37,6 +43,7 @@ class Applicant
     public function __construct()
     {
         $this->skills = new ArrayCollection();
+        $this->experiences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +97,37 @@ class Applicant
     public function setResume(?string $resume): self
     {
         $this->resume = $resume;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Experience[]
+     */
+    public function getExperiences(): Collection
+    {
+        return $this->experiences;
+    }
+
+    public function addExperience(Experience $experience): self
+    {
+        if (!$this->experiences->contains($experience)) {
+            $this->experiences[] = $experience;
+            $experience->setApplicant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperience(Experience $experience): self
+    {
+        if ($this->experiences->contains($experience)) {
+            $this->experiences->removeElement($experience);
+            // set the owning side to null (unless already changed)
+            if ($experience->getApplicant() === $this) {
+                $experience->setApplicant(null);
+            }
+        }
 
         return $this;
     }

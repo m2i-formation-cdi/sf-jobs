@@ -79,6 +79,7 @@ class JobController extends AbstractController
             } catch(OptimisticLockException $ex){
                 $this->addFlash("error", "Le job a été modifié par une tierce personne");
             }
+
         }
 
         return $this->render('job/edit.html.twig', [

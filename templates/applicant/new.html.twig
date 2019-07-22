@@ -9,3 +9,25 @@
 
     <a href="{{ path('applicant_index') }}">back to list</a>
 {% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function () {
+            $collectionHolder = $("#applicant_skills");
+            $template = $collectionHolder.data("prototype");
+
+            $("#addSkill").click(function () {
+                let index = $collectionHolder.children().length;
+                let newSkill = $template.replace(/__name__/g, index);
+                $collectionHolder.append(newSkill);
+            });
+        });
+
+
+
+    </script>
+{% endblock %}
